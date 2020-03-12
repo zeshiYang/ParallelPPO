@@ -1,0 +1,11 @@
+{
+	"env_name" : "Walker2d-v2",
+	"num_envs" : 10,
+	"lam":0.95,
+	"gamma":0.99,
+	"v_max": 10,
+	"v_min": 0,
+    "exp_id" : 0, 
+    "time_limit": 1000,
+	"save_dir":"./experiment_Walker2d/"
+}
