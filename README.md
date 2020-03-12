@@ -13,3 +13,6 @@ Parallel implementation of PPO algorithm for deep reinforcement learning(PyTorch
     exp_id: id of experiments
     time_limit: maximum of steps in environment, designed for curriculum learning
     save_dir: directory of saved models and logs
+## Results on OpenAI gym Walker2d-v2
+    ![image](imgs/walker2d.PNG)
+    
