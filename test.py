@@ -23,6 +23,7 @@ def make_vec_env(env_name, num_env):
 if __name__ == "__main__":
     import json
     import argparse
+    import time
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=str, help="training configrature file path")
     args = parser.parse_args()
@@ -44,6 +45,7 @@ if __name__ == "__main__":
     s_norm = Normalizer(vec_env.observation_space.shape[0])
     actor = Actor(vec_env.observation_space.shape[0], vec_env.action_space.shape[0], vec_env.action_space, hidden=[128, 64])
     critic = Critic(vec_env.observation_space.shape[0], 0/(1-gamma), v_max/(1-gamma), hidden =[128, 64])
-
-    PPO_vec(actor=actor, critic = critic, s_norm = s_norm, vec_env = vec_env, exp_id = exp_id, save_dir= save_dir, v_max=v_max, v_min=v_min, time_limit= time_limit)
-        
+    start = time.time()
+    PPO_vec(actor=actor, critic = critic, s_norm = s_norm, vec_env = vec_env, exp_id = exp_id, save_dir= save_dir, iter_num= 500, v_max=v_max, v_min=v_min, time_limit= time_limit, use_gpu_model=False)
+    end = time.time()
+    print("durations:{}".format(end - start))

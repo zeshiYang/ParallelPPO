@@ -39,3 +39,7 @@ class CLEnv(object):
         """
         self._task_t = min(t, 1000)
 
+    def set_new_design(self, design):
+        self._env.set_new_design(design)
+
+

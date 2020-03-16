@@ -80,10 +80,11 @@ class GAERunner(object):
 
         self.end_rwds = []
 
-        self.s_norm.update()
         if self._use_gpu:
             self.s_norm.cpu()
             self.actor.cpu()
+            self.critic.cpu()
+        self.s_norm.update()
 
         for _ in range(nsteps):
             obst = torch.FloatTensor(self.obs)
@@ -116,6 +117,7 @@ class GAERunner(object):
         if self._use_gpu:
           self.s_norm.cuda()
           self.actor.cuda()
+          self.critic.cuda()
 
         mb_end_rwds     = np.array(self.end_rwds)
         mb_news = np.asarray(mb_news,   dtype=np.bool)
@@ -128,7 +130,7 @@ class GAERunner(object):
         mb_ob_ends= np.asarray(mb_ob_ends, dtype=np.float32)
 
         with torch.no_grad():
-            obst = torch.Tensor(mb_obs)
+            obst = self.toTorch(mb_obs)
             obst_norm = self.s_norm(obst)
             mb_vpreds = self.critic(obst_norm)
             dim0, dim1, dim2 = mb_vpreds.shape
@@ -137,7 +139,7 @@ class GAERunner(object):
 
             mb_vends = np.zeros(mb_ends.shape)
             if len(mb_ob_ends) > 0:
-                obst = torch.Tensor(mb_ob_ends)
+                obst = self.toTorch(mb_ob_ends)
                 obst_norm = self.s_norm(obst)
                 vends = self.critic(obst_norm)
                 mb_vends[mb_ends] = vends.cpu().view(-1)

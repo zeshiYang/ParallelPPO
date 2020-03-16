@@ -1,0 +1,11 @@
+{
+	"env_name" : "Half-Cheeath",
+	"num_envs" : 5,
+	"lam":0.95,
+	"gamma":0.99,
+	"v_max": 1,
+	"v_min": 0,
+    "exp_id" : 0, 
+    "time_limit": 100,
+	"save_dir":"./experiment_Walker2d/"
+}

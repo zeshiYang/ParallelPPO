@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.distributions as D
 import numpy as np
-
+from IPython import embed
 ######
 INIT_ACTOR_SCALE = 0.01
 NOISE = 0.1
@@ -36,7 +36,7 @@ class Normalizer(nn.Module):
     self.sample_lim = sample_lim
 
   def forward(self, x):
-    return np.clip(((x - self.mean) / self.std), -4,4)
+    return (x - self.mean) / self.std
 
   def unnormalize(self, x):
     return x * self.std + self.mean
@@ -68,6 +68,7 @@ class Normalizer(nn.Module):
       return
 
     # update mean, mean_sq and std
+
     total_num = self.num + self.num_new;
     self.mean.data *= (self.num / total_num)
     self.mean.data += self.sum_new / total_num

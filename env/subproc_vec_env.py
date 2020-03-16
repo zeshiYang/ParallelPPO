@@ -21,6 +21,8 @@ def worker(remote, parent_remote, env_fn_wrapper):
       elif cmd == 'reset':
         ob = env.reset()
         remote.send(ob)
+      elif cmd == "set_new_design":
+            env.set_new_design(data)
       elif cmd == 'observation_space':
         remote.send(env.observation_space)
       elif cmd == 'action_space':
@@ -118,6 +120,12 @@ class SubprocVecEnv(VecEnv):
       remote.send(('set_task_t', t))
     for remote in self.remotes:
       remote.recv()
+  def set_new_design(self, vec):
+    self._assert_not_closed()
+    for remote in self.remotes:
+      remote.send(('set_new_design', vec))
+   
+        
 
   def calc_sub_rewards(self):
     self._assert_not_closed()
